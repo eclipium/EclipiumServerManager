@@ -1,5 +1,5 @@
 # EclipiumServerManager
-## Un gestionnaire d'applications avec systemd
+## Un gestionnaire d'applications utilisant systemd
 Il vous permettera de gérer des applications NodeJS, Python, Java, .NET 5/6/Core 3.1, et Go sous les distributions Linux utilisant SystemD (Principalement testé sur Fedora et Almalinux).
 
 ## Liste des commandes
