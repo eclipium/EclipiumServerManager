@@ -327,7 +327,7 @@ namespace EclipiumServerManager
             {
                 if (app.DisplayName == args[1] || app.ServiceName == args[1])
                 {
-                    var logs = RunCommandWithBash("journalctl -u testgo -n 30 --no-pager");
+                    var logs = RunCommandWithBash("journalctl -u "+app.ServiceName+" -n 30 --no-pager");
                     Console.Write(logs);
                     return;
                 }
