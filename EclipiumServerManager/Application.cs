@@ -2,9 +2,9 @@ namespace EclipiumServerManager
 {
     public class Application
     {
-        public string DisplayName { get; }
-        public string ServiceName { get; }
-        public string Directory { get; }
+        public string DisplayName { get; set; }
+        public string ServiceName { get; set; }
+        public string Directory { get; set; }
         public string Type { get; }
         public bool NeedsRoot { get; }
 

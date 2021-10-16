@@ -14,5 +14,7 @@ esm restart <app> => Redémmare une application
 esm kill <app> => Tue le processus d'une application
 esm enable <app> => Active le démarrage automatique de l'application au démarrage du système
 esm disable <app> => Désactive le démarrage automatique de l'application au démarrage du système
+esm delete <app> => Supprime l'application
+esm rename <app> <new-name> => Renomme l'application
 
 ```

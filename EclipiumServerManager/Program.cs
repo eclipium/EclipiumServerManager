@@ -66,8 +66,14 @@ namespace EclipiumServerManager
                 case "enable":
                     EnableApp(args);
                     break;
+                case "delete":
+                    DeleteApp(args);
+                    break;
                 case "disable":
                     DisableApp(args);
+                    break;
+                case "rename":
+                    RenameApp(args);
                     break;
                 default:
                     Console.WriteLine("Commande inconnue, exécutez 'esm help' pour la liste des commandes.");
@@ -88,6 +94,8 @@ namespace EclipiumServerManager
             Console.WriteLine("esm kill <app> => Tue le processus d'une application");
             Console.WriteLine("esm enable <app> => Active le démarrage automatique de l'application au démarrage du système");
             Console.WriteLine("esm disable <app> => Désactive le démarrage automatique de l'application au démarrage du système");
+            Console.WriteLine("esm delete <app> => Supprime l'application");
+            Console.WriteLine("esm rename <app> <new-name> => Renomme l'application");
         }
         
         private static void CreateUserIfDoesNotExist()
@@ -109,6 +117,86 @@ namespace EclipiumServerManager
             }
         }
 
+        private static void RenameApp(string[] args)
+        {
+            if (args.Length != 3)
+            {
+                Console.WriteLine("Veuillez spécifier une application");
+                return;
+            }
+
+            var apps = GetAppsAsList();
+            foreach (var app in apps)
+            {
+                if (app.DisplayName == args[1] || app.ServiceName == args[1])
+                {
+                    var newServiceName = args[2].ToLower().Replace(" ", "-");
+                    
+                    foreach (var app2 in apps)
+                    {
+                        if (app2.DisplayName == args[2] || app2.ServiceName == newServiceName || File.Exists("/etc/systemd/system/" + newServiceName + ".service") || File.Exists("/usr/lib/systemd/system/" + newServiceName + ".service"))
+                        {
+                            Console.WriteLine("Le nom d'application existe déjà");
+                            return;
+                        }
+                    }
+                    
+                    RunCommandWithSystemD("disable " + app.ServiceName);
+                    RunCommandWithBash("mv /etc/systemd/system/" + app.ServiceName + ".service /etc/systemd/system/" + newServiceName + ".service");
+                    RunCommandWithBash("mv /home/eclipium-server-manager/applications/" + app.ServiceName + " /home/eclipium-server-manager/applications/" + newServiceName);
+                    app.DisplayName = args[2];
+                    File.WriteAllText("/etc/systemd/system/" + newServiceName + ".service",File.ReadAllText("/etc/systemd/system/" + newServiceName + ".service").Replace(app.ServiceName, newServiceName));
+                    app.Directory = app.Directory.Replace(app.ServiceName, newServiceName);
+                    app.ServiceName = newServiceName;
+                    RunCommandWithSystemD("enable " + app.ServiceName);
+                    File.WriteAllText("/home/eclipium-server-manager/applications/.apps", JsonSerializer.Serialize(apps));
+                    Console.WriteLine("L'application a bien été renommée.");
+                    return;
+                }
+            }
+            Console.WriteLine("L'application n'existe pas");
+        }
+        
+        private static void DeleteApp(string[] args)
+        {
+            if (args.Length != 2)
+            {
+                Console.WriteLine("Veuillez spécifier une application");
+                return;
+            }
+            
+            bool? canDelete = null;
+            while (canDelete == null)
+            {
+                Console.Write("Voulez-vou vraiment supprimer l'application [o/N]");
+                var result = Console.ReadKey();
+                if (result.Key == ConsoleKey.Enter || result.Key == ConsoleKey.N)
+                {
+                    Console.Write("\n");
+                    return;
+                }
+                if (result.Key == ConsoleKey.O)
+                    canDelete = true;
+                Console.Write("\n");
+            }
+            
+
+            var apps = GetAppsAsList();
+            foreach (var app in apps)
+            {
+                if (app.DisplayName == args[1] || app.ServiceName == args[1])
+                {
+                    RunCommandWithSystemD("disable " + app.ServiceName);
+                    RunCommandWithBash("rm -f /etc/systemd/system/" + app.ServiceName + ".service");
+                    RunCommandWithBash("rm -rf /home/eclipium-server-manager/applications/" + app.ServiceName);
+                    apps.Remove(app);
+                    File.WriteAllText("/home/eclipium-server-manager/applications/.apps", JsonSerializer.Serialize(apps));
+                    Console.WriteLine("L'application a bien été supprimée.");
+                    return;
+                }
+            }
+            Console.WriteLine("L'application n'existe pas");
+        }
         private static void EnableApp(string[] args)
         {
             if (args.Length != 2)
