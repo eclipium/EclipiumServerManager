@@ -1,0 +1,9 @@
+[Service]
+User={user}
+Type=simple
+RemainAfterExit=no
+Restart=on-failure
+ExecStart=bash -c "cd {workingDir} && {command}"
+
+[Install]
+WantedBy=multi-user.target
