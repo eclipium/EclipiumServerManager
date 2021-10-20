@@ -13,6 +13,8 @@
     <ItemGroup>
       <None Remove="Template.service" />
       <EmbeddedResource Include="Template.service" />
+      <None Remove="Help.txt" />
+      <EmbeddedResource Include="Help.txt" />
     </ItemGroup>
 
 </Project>
