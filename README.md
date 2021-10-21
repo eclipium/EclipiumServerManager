@@ -1,6 +1,7 @@
 # EclipiumServerManager
 ## Un gestionnaire d'applications utilisant systemd
-Il vous permettera de gérer des applications NodeJS, Python, Java, .NET 5/6/Core 3.1, et Go sous les distributions Linux utilisant SystemD (Principalement testé sur Fedora et Almalinux).
+Il vous permettera de gérer des applications NodeJS, Python, Java, .NET 5/6/Core 3.1, et Go sous les distributions Linux utilisant systemd 
+(Principalement testé sur Fedora et Almalinux, les distributions basées sur Debian ne sont pas encore supportées).
 
 ## Liste des commandes
 
@@ -21,5 +22,6 @@ esm backup all => Crée une sauvegarde de toutes les applications
 esm list-backups => Liste toutes les sauvegardes
 esm list-backups <app> => Liste les sauvegardes d'une application
 esm delete-backup <backup-name> => Supprime une backup si elle existe
+esm restore-backup <backup-name> => Restaure une backup si elle existe
 
 ```

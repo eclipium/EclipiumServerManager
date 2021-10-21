@@ -47,7 +47,8 @@ namespace EclipiumServerManager
                 {"rename", () => ManageApps.RenameApp(args)},
                 {"backup", () => AppsBackups.Backup(args)},
                 {"list-backups", () => AppsBackups.ListBackups(args)},
-                {"delete-backup", () => AppsBackups.Delete(args)}
+                {"delete-backup", () => AppsBackups.Delete(args)},
+                {"restore-backup", () => AppsBackups.Restore(args)}
             };
 
             if(commandsList.ContainsKey(command))

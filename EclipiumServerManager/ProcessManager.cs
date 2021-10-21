@@ -28,14 +28,35 @@ namespace EclipiumServerManager
             return output;
         }
         
+        public static void RunCommandWithBashNoOutput(string command)
+        {
+            var psi = new ProcessStartInfo
+            {
+                FileName = "/bin/bash",
+                Arguments = "-c \"" + command + "\"",
+                RedirectStandardOutput = false,
+                UseShellExecute = true,
+                CreateNoWindow = true
+            };
+
+            using var process = Process.Start(psi);
+            if (process == null)
+                throw new Exception("Command does not exist");
+
+            process.WaitForExit();
+
+        }
+        
         public static string RunCommandWithSystemD(string command)
         {
-            var psi = new ProcessStartInfo();
-            psi.FileName = "/bin/systemctl";
-            psi.Arguments = command;
-            psi.RedirectStandardOutput = true;
-            psi.UseShellExecute = false;
-            psi.CreateNoWindow = true;
+            var psi = new ProcessStartInfo
+            {
+                FileName = "/bin/systemctl",
+                Arguments = command,
+                RedirectStandardOutput = true,
+                UseShellExecute = false,
+                CreateNoWindow = true
+            };
 
             using var process = Process.Start(psi);
             if (process == null)

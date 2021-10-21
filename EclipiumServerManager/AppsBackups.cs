@@ -70,6 +70,36 @@ namespace EclipiumServerManager
             }
             Console.WriteLine("L'application n'existe pas");
         }
+
+        public static void Restore(string[] args)
+        {
+            if (args.Length != 2)
+            {
+                Console.WriteLine("Veuillez spécifier une backup");
+                return;
+            }
+
+            if (File.Exists("/home/eclipium-server-manager/backups/" + args[1]))
+            {
+                var serviceName = (new Regex(@"(.+?)(?=-[\d]{2}-[\d]{2}-[\d]{4}-[\d]{2}:[\d]{2}.tar.gz)")).Match(args[1]).Value;
+                var apps = AppsInformations.GetAppsAsList();
+                foreach (var app in apps)
+                {
+                    if(app.ServiceName == serviceName)
+                    {
+                        ProcessManager.RunCommandWithBash($"rm -rf /home/eclipium-server-manager/applications/{serviceName}");
+                        ProcessManager.RunCommandWithBashNoOutput($"tar -xf /home/eclipium-server-manager/backups/{args[1]} -C /home/eclipium-server-manager/applications/");
+                        Console.WriteLine("La backup a bien été restaurée");
+                        return;
+                    }
+                }
+                Console.WriteLine("L'application à restaurer n'existe pas");
+            }
+            else
+            {
+                Console.WriteLine("La backup n'existe pas");
+            }
+        }
         
         public static void ListBackups(string[] args)
         {
@@ -116,7 +146,7 @@ namespace EclipiumServerManager
         
         private static void CreateTarGz(string tgzFilename, string folderName)
         {
-            ProcessManager.RunCommandWithBash($"tar -czvf {tgzFilename} --directory=/home/eclipium-server-manager/applications {folderName}");
+            ProcessManager.RunCommandWithBashNoOutput($"tar -czvf {tgzFilename} --directory=/home/eclipium-server-manager/applications {folderName}");
         }
         
     }

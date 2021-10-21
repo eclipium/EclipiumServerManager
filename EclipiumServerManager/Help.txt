@@ -15,3 +15,4 @@ esm backup all => Crée une sauvegarde de toutes les applications
 esm list-backups => Liste toutes les sauvegardes
 esm list-backups <app> => Liste les sauvegardes d'une application
 esm delete-backup <backup-name> => Supprime une backup si elle existe
+esm restore-backup <backup-name> => Restaure une backup si elle existe
