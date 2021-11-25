@@ -1,72 +1,66 @@
-using System;
-using System.Diagnostics;
-using System.Reflection.Metadata.Ecma335;
+namespace EclipiumServerManager;
 
-namespace EclipiumServerManager
+public static class ProcessManager
 {
-    public static class ProcessManager
+    public static string RunCommandWithBash(string command)
     {
-        public static string RunCommandWithBash(string command)
+        var psi = new ProcessStartInfo
         {
-            var psi = new ProcessStartInfo
-            {
-                FileName = "/bin/bash",
-                Arguments = "-c \"" + command + "\"",
-                RedirectStandardOutput = true,
-                UseShellExecute = false,
-                CreateNoWindow = true
-            };
+            FileName = "/bin/bash",
+            Arguments = "-c \"" + command + "\"",
+            RedirectStandardOutput = true,
+            UseShellExecute = false,
+            CreateNoWindow = true
+        };
 
-            using var process = Process.Start(psi);
-            if (process == null)
-                throw new Exception("Command does not exist");
+        using var process = Process.Start(psi);
+        if (process == null)
+            throw new Exception("Command does not exist");
 
-            process.WaitForExit();
+        process.WaitForExit();
 
-            var output = process.StandardOutput.ReadToEnd();
+        var output = process.StandardOutput.ReadToEnd();
 
-            return output;
-        }
-        
-        public static void RunCommandWithBashNoOutput(string command)
+        return output;
+    }
+
+    public static void RunCommandWithBashNoOutput(string command)
+    {
+        var psi = new ProcessStartInfo
         {
-            var psi = new ProcessStartInfo
-            {
-                FileName = "/bin/bash",
-                Arguments = "-c \"" + command + "\"",
-                RedirectStandardOutput = false,
-                UseShellExecute = true,
-                CreateNoWindow = true
-            };
+            FileName = "/bin/bash",
+            Arguments = "-c \"" + command + "\"",
+            RedirectStandardOutput = false,
+            UseShellExecute = true,
+            CreateNoWindow = true
+        };
 
-            using var process = Process.Start(psi);
-            if (process == null)
-                throw new Exception("Command does not exist");
+        using var process = Process.Start(psi);
+        if (process == null)
+            throw new Exception("Command does not exist");
 
-            process.WaitForExit();
+        process.WaitForExit();
+    }
 
-        }
-        
-        public static string RunCommandWithSystemD(string command)
+    public static string RunCommandWithSystemD(string command)
+    {
+        var psi = new ProcessStartInfo
         {
-            var psi = new ProcessStartInfo
-            {
-                FileName = "/bin/systemctl",
-                Arguments = command,
-                RedirectStandardOutput = true,
-                UseShellExecute = false,
-                CreateNoWindow = true
-            };
+            FileName = "/bin/systemctl",
+            Arguments = command,
+            RedirectStandardOutput = true,
+            UseShellExecute = false,
+            CreateNoWindow = true
+        };
 
-            using var process = Process.Start(psi);
-            if (process == null)
-                throw new Exception("Command does not exist");
+        using var process = Process.Start(psi);
+        if (process == null)
+            throw new Exception("Command does not exist");
 
-            process.WaitForExit();
+        process.WaitForExit();
 
-            var output = process.StandardOutput.ReadToEnd();
+        var output = process.StandardOutput.ReadToEnd();
 
-            return output;
-        }
+        return output;
     }
 }

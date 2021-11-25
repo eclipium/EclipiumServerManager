@@ -1,20 +1,18 @@
-using System.IO;
 
-namespace EclipiumServerManager
+namespace EclipiumServerManager;
+
+public static class ResourceReader
 {
-    public static class ResourceReader
+    public static byte[] ReadFully(Stream input)
     {
-        public static byte[] ReadFully(Stream input)
+        var buffer = new byte[16 * 1024];
+        using MemoryStream ms = new MemoryStream();
+        int read;
+        while ((read = input.Read(buffer, 0, buffer.Length)) > 0)
         {
-            var buffer = new byte[16 * 1024];
-            using MemoryStream ms = new MemoryStream();
-            int read;
-            while ((read = input.Read(buffer, 0, buffer.Length)) > 0)
-            {
-                ms.Write(buffer, 0, read);
-            }
-
-            return ms.ToArray();
+            ms.Write(buffer, 0, read);
         }
+
+        return ms.ToArray();
     }
 }
