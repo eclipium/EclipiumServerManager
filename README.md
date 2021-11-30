@@ -36,9 +36,11 @@ esm restore-backup <backup-name> => Restaure une backup si elle existe
 ESM nécessite l'installation du runtime .NET 6
 
 **Ubuntu 20.04 :**
+
 ``wget https://packages.microsoft.com/config/ubuntu/20.04/packages-microsoft-prod.deb -O packages-microsoft-prod.deb``
 
 **Ubuntu 18.04 :**
+
 ``wget https://packages.microsoft.com/config/ubuntu/18.04/packages-microsoft-prod.deb -O packages-microsoft-prod.deb``
 
 **Debian 11 :**
