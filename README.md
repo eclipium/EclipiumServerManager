@@ -44,12 +44,15 @@ ESM nécessite l'installation du runtime .NET 6
 ``wget https://packages.microsoft.com/config/ubuntu/18.04/packages-microsoft-prod.deb -O packages-microsoft-prod.deb``
 
 **Debian 11 :**
+
 ``wget https://packages.microsoft.com/config/debian/11/packages-microsoft-prod.deb -O packages-microsoft-prod.deb``
 
 **Debian 10 :**
+
 ``wget https://packages.microsoft.com/config/debian/10/packages-microsoft-prod.deb -O packages-microsoft-prod.deb``
 
 **Debian 9 :**
+
 ``wget https://packages.microsoft.com/config/debian/9/packages-microsoft-prod.deb -O packages-microsoft-prod.deb``
 
 Le reste des commandes est commun a Ubuntu et Debian toutes versions confondues
