@@ -1,4 +1,4 @@
-# EclipiumServerManager
+# Eclipium Server Manager
 
 ![](https://raw.githubusercontent.com/eclipium/EclipiumServerManager/main/logo.png)
 
