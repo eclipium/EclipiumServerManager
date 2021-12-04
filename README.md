@@ -16,6 +16,7 @@ Il vous permettera de gérer des applications NodeJS, Python, Java, .NET 5/6/Cor
 ```
 esm list => Affiche la liste des applications hébergées
 esm status <app> => Affiche le statut d'une application
+esm create => Crée une application esm
 esm log <app> => Affiche l'historique de la console de l'application
 esm start <app> => Démarre une application
 esm stop <app> => Arrête une application
