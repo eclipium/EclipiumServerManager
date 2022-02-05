@@ -9,7 +9,7 @@ Il vous permettera de gérer des applications NodeJS, Python, Java, .NET 5/6/Cor
 - Ubuntu 18.04, 20.04
 - Debian 9, 10, 11
 - Almalinux 8.5+, CentOS 8.5+, RHEL 8.5+...
-- Fedora 36+
+- Fedora 34+
 
 ## Liste des commandes
 
