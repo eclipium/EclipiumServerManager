@@ -1,6 +1,8 @@
 # Eclipium Server Manager
 
-![](https://raw.githubusercontent.com/eclipium/EclipiumServerManager/main/logo.png)
+## ATTENTION
+
+ESM est un projet archivé a été réecrit en C++ et s'appelle désormais LSAM, et disponible à l'adresse suivante : [SpeedCode210/lsam](https://github.com/SpeedCode210/lsam)
 
 ## Un gestionnaire d'applications utilisant systemd
 Il vous permettera de gérer des applications NodeJS, Python, Java, .NET 5/6/Core 3.1, et Go sous les distributions Linux utilisant systemd.
